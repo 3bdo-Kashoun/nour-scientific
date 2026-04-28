@@ -1,0 +1,116 @@
+.hero { text-align: center;
+     padding: 60px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+    }
+.section-tag {
+    color: var(--primary-color);
+    font-weight: 700;
+    background: #e8f8f5;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+/* Stats */
+.stats-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 5% 60px;
+    flex-wrap: wrap;
+}
+.stat-card {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 30px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+    transition: transform 0.3s;
+}
+.stat-card:hover { transform: translateY(-5px); }
+.stat-icon { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px; }
+.stat-number { font-size: 2rem; font-weight: 700; margin-bottom: 5px; }
+
+/* Vision/Partners */
+.vision-mission { padding: 40px 5%; background: #fdfdfd; }
+.vm-container { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; }
+.vm-card {
+    flex: 1; min-width: 300px;
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    color: #fff; padding: 40px; border-radius: 15px;
+}
+.partners-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 0 5% 60px; }
+/* تنسيق حاوية الشركاء */
+.partner-card {
+    position: relative;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 15px;
+    padding: 30px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+}
+
+/* محتوى النص الافتراضي */
+.partner-info {
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+/* تنسيق الشعار المخفي افتراضياً */
+.partner-logo {
+    position: absolute;
+    bottom: -100%;
+    width: 80%;
+    height: 70%;
+    object-fit: contain;
+    transition: all 0.4s ease;
+    opacity: 0;
+}
+
+/* تأثير الـ Hover */
+.partner-card:hover {
+    background-color: var(--secondary-color); 
+    transform: translateY(-10px); 
+    box-shadow: 0 15px 30px rgba(46, 204, 113, 0.2);
+}
+
+.partner-card:hover .partner-info {
+    opacity: 0;
+    transform: translateY(-20px); 
+}
+
+.partner-card:hover .partner-logo {
+    bottom: 15%;
+    opacity: 1;
+    filter: brightness(0) invert(1); 
+}
+
+/* الحفاظ على التاج (Tag) ثابتاً أو تغيير لونه */
+.partner-card .tag {
+    z-index: 2;
+    transition: 0.3s;
+}
+
+.partner-card:hover .tag {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+.tag { position: absolute; top: 10px; right: 10px; font-size: 0.7rem; padding: 3px 8px; border-radius: 4px; }
+.tag.global { background: #e0f7fa; color: #006064; }
+.tag.local { background: #e8f5e9; color: #1b5e20; }
+.tag.regional { background: #fff3e0; color: #e65100; }

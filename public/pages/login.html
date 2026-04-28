@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تسجيل الدخول - نور العلمية</title>
+    <link rel="stylesheet" href="login.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="login-wrapper">
+      <div class="login-card">
+        <div class="login-header">
+          <img src="logo.png" alt="نور العلمية" class="logo" />
+          <h1>نور العلمية</h1>
+          <p>بوابة الدخول للموظفين والعملاء</p>
+        </div>
+
+        <form action="" method="get">
+          <div class="input-box">
+            <label>البريد الإلكتروني</label>
+            <input type="email" placeholder="أدخل بريدك الإلكتروني" required name="email"/>
+          </div>
+
+          <div class="input-box">
+            <label>كلمة المرور</label>
+            <input type="password" placeholder="أدخل كلمة المرور" required name="password" />
+          </div>
+          <div class="remember-forget">
+            <label class="remember-me">
+              <input type="checkbox" />
+              <span class="checkmark"></span>
+              تذكرني
+            </label>
+          </div>
+          <div class="forgot-pass">
+            <a href="#">نسيت كلمة المرور؟</a>
+          </div>
+
+          <button type="submit" class="btn-login">تسجيل الدخول</button>
+
+          <div class="back-home">
+            <a href="index.html">العودة للرئيسية</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

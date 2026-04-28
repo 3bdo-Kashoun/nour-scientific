@@ -1,0 +1,408 @@
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 60px 0 ;
+    height: 100%;
+
+}
+
+.main-top-icon {
+    font-size: 40px;
+    color: var(--primary-green);
+    margin-bottom: 15px;
+    transition: var(--transition);
+    animation: logo_in 15s linear infinite;
+    margin-top: 50px;
+}
+@keyframes logo_in{
+    from{transform: rotate(0deg );}
+    to{transform: rotate(360deg );}
+}
+
+.hero h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    color: var(--text-gray);
+}
+
+/* Products Grid & Cards */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+    padding-bottom: 80px;
+}
+.products-grid > div {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+}
+
+.product-card {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: var(--transition);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden; /* لمنع خروج الـ Tag عن حدود الكارد الدائرية */
+
+}
+
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08);
+    border-color: var(--primary-green);
+}
+
+.products-grid h2 {
+    grid-column: 1 / -1;
+    width: 100%;
+    margin: 40px 0 20px 0;
+    padding: 10px 0;
+    text-align: left;
+    font-size: 24px;
+    font-weight: bold;
+    color: #1a202c;
+    border-bottom: 2px solid #00844441;
+    border-left: 4px solid var(--primary-green);
+    padding-left: 7px;
+}
+
+.product-info pre {
+    font-size: 14px;
+   font-family: Arial, Helvetica, sans-serif;
+    color: #34604b88;
+    margin-bottom: 15px;
+}
+
+.product-image {
+    height: 220px;
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.product-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: var(--transition);
+}
+/* أنيميشن زووم خفيف للصورة */
+.product-card:hover .product-image img:hover {
+    transform: scale(2);
+}
+
+.product-info {
+    padding: 25px;
+}
+
+.product-info h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.product-info p {
+    color: var(--text-gray);
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.features-list {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.features-list li {
+    font-size: 14px;
+    margin-bottom: 8px;
+    position: relative;
+    padding-right: 20px;
+}
+
+.features-list li::before {
+    content: "•";
+    color: var(--primary-green);
+    position: absolute;
+    right: 0;
+    font-weight: bold;
+}
+
+.supplier-info {
+    font-size: 12px;
+    color: var(--primary-green);
+    background: #f0fdf4;
+    padding: 8px 12px;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+
+/* تنسيق قسم الفلترة والبحث */
+.filters {
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.search-box {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px 45px 12px 15px;
+    border: 2px solid #eee;
+    border-radius: 25px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.search-box i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+.filter-tabs {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+
+/* تنسيقات إضافية للكارت */
+.category-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #28a745;
+    color: white;
+    padding: 4px 10px;
+    font-size: 12px;
+    border-radius: 5px;
+}
+.card-footer-action {
+    display: flex;
+    justify-content: space-between; /* لتوزيع العناصر واحد يمين وواحد يسار */
+    align-items: center;           /* لمحاذاة العناصر عمودياً في المنتصف */
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;    /* خط بسيط للفصل (اختياري) */
+}
+
+.price-container {
+    display: flex;
+    flex-direction: column;        /* لجعل كلمة السعر فوق الرقم أو بجانبه */
+    text-align: right;
+}
+
+.price-label {
+    font-size: 12px;
+    color: #777;
+}
+
+.price-value {
+    font-weight: bold;
+    color: var(--secondary-color);                /* لون السعر (برتقالي كما في الصورة) */
+    font-size: 1.1rem;
+}
+
+.btn-buy {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 10px 18px;
+    font-size: 15px;
+    font-weight: 600;
+
+    color: #fff;
+     background: linear-gradient(135deg, #16a34a, #22c55e);
+    border: none;
+    border-radius: 10px;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(21, 135, 55, 0.3);
+}
+
+/* Hover */
+.btn-buy:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(21, 128, 61, 0.4);
+     background: linear-gradient(135deg, rgb(21, 128, 61), #16a34a);
+}
+
+/* Click */
+.btn-buy:active {
+    transform: scale(0.96);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+/* أيقونة */
+.btn-buy i {
+    font-size: 14px;
+}
+
+/* ابحث عن الـ div الذي يسبق الـ search-wrapper مباشرة */
+.search-section .container {
+    max-width: 100% !important; /* لفتح العرض بالكامل */
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+    margin: 50px auto !important; /* لتوسيط الحاوية */
+}
+
+.search-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   max-width: 2000px !important; /* جرب رقماً كبيراً جداً للتأكد */
+    width: 95% !important;
+    background: #fff;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    padding: 5px;
+    transition: 0.3s;
+}
+
+
+.search-wrapper:focus-within {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+
+
+}
+
+.search-input {
+    flex: 3;
+    border: none;
+    padding: 12px 20px;
+    outline: none;
+    font-size: 16px;
+}
+
+
+.category-select {
+    border: 0.5px solid  rgba(0, 0, 0, 0.694);
+    border-radius: 10px;
+    padding: 5px 20px;
+    margin-left: 20px;
+    background: transparent;
+    outline: none;
+    color: #444444;
+    cursor: pointer;
+}
+
+/* للموبايل: اجعل العناصر تحت بعضها إذا ضاقت الشاشة */
+@media (max-width: 600px) {
+    .search-wrapper {
+        /* نستخدم wrap للسماح للزر بالنزول للأسفل إذا ضاق المكان */
+        flex-wrap: wrap;
+        padding: 8px !important;
+        gap: 5px;
+        border-radius: 15px !important;
+    }
+
+    .search-input {
+        /* يأخذ أكبر مساحة ممكنة بجانب القائمة */
+        border: 0.5px solid  rgba(0, 0, 0, 0.694) !important;
+        border-radius: 10px !important;
+        flex: 2 !important;
+        min-width: 120px; /* ضمان عدم اختفاء الحقل */
+        font-size: 14px !important;
+        padding: 10px 5px !important;
+    }
+
+    .category-select {
+        /* يبقى بجانب الحقل */
+        flex: 1 !important;
+        min-width: 100px;
+        font-size: 13px !important;
+        padding: 10px 5px !important;
+    }
+
+    .search-btn {
+        /* الزر يأخذ عرضاً كاملاً في الأسفل لسهولة الضغط */
+        width: 100%;
+        margin-top: 5px;
+        padding: 12px !important;
+        border-radius: 10px !important;
+    }
+
+    .search-icon {
+        display: none; /* إخفاء الأيقونة لتوفير مساحة عرضية للInput والـ Select */
+    }
+}
+/* تنسيق الـ Tag في الزاوية */
+.category-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(15, 153, 48, 0.694);
+    color: white !important; /* التأكد من أن لون النص أبيض */
+    padding: 5px 15px;       /* زيادة الحشوة الداخلية */
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 99;             /* التأكد من أنه فوق كل شيء */
+    min-width: 50px;         /* أقل عرض مسموح به */
+    min-height: 20px;        /* أقل ارتفاع مسموح به */
+    display: inline-block;
+    text-align: center;
+    direction: rtl;          /* لدعم اللغة العربية داخل التاج */
+}
+   /* 1. الحاوية الأساسية */
+#products-container {
+    transition: all 0.4s ease-in-out; /* مدة الحركة ونوعها */
+    opacity: 1;
+}
+
+/* 2. الحالة أثناء جلب البيانات (الاختفاء) */
+/* HTMX يضيف هذا الكلاس تلقائياً للمحتوى القديم قبل حذفه */
+.htmx-swapping #products-container {
+    opacity: 0;
+    transform: translateY(10px); /* حركة بسيطة للأسفل */
+}
+
+/* 3. الحالة عند إضافة البيانات الجديدة (الظهور) */
+/* HTMX يضيف هذا الكلاس للمحتوى الجديد لحظة دخوله */
+.htmx-added #products-container {
+    opacity: 0;
+}
+
+/* 4. كروت المنتجات نفسها (اختياري لزيادة الجمالية) */
+.product-card {
+    animation: fadeInItem 0.5s ease backwards;
+}
+
+@keyframes fadeInItem {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
