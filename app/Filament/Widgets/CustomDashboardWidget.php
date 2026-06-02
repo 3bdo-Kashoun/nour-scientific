@@ -27,6 +27,24 @@ class CustomDashboardWidget extends Widget
         // عدد الطلبيات الجديدة اليوم
         $todayOrdersCount = Order::whereDate('created_at', today())->count();
 
+        // حساب نسبة النمو للمبيعات (مقارنة الشهر الحالي بالشهر السابق)
+        $thisMonthSales = Order::where('status', 'sold')->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->sum('total_price');
+        $lastMonthSales = Order::where('status', 'sold')->whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->sum('total_price');
+        $salesGrowth = $lastMonthSales > 0 ? (($thisMonthSales - $lastMonthSales) / $lastMonthSales) * 100 : ($thisMonthSales > 0 ? 100.0 : 0.0);
+
+        // عدد المنتجات الجديدة المضافة في آخر 30 يوم
+        $newProductsCount = Product::where('created_at', '>=', now()->subDays(30))->count();
+
+        // نسبة نمو العملاء (مقارنة الشهر الحالي بالشهر السابق)
+        $thisMonthUsers = User::where('is_admin', false)->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->count();
+        $lastMonthUsers = User::where('is_admin', false)->whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->count();
+        $usersGrowth = $lastMonthUsers > 0 ? (($thisMonthUsers - $lastMonthUsers) / $lastMonthUsers) * 100 : ($thisMonthUsers > 0 ? 100.0 : 0.0);
+
+        // نسبة نمو الطلبيات (مقارنة الشهر الحالي بالشهر السابق)
+        $thisMonthOrders = Order::whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->count();
+        $lastMonthOrders = Order::whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->count();
+        $ordersGrowth = $lastMonthOrders > 0 ? (($thisMonthOrders - $lastMonthOrders) / $lastMonthOrders) * 100 : ($thisMonthOrders > 0 ? 100.0 : 0.0);
+
         // 2. آخر الطلبات للجدول
         $latestOrders = Order::with('user')
             ->latest()
@@ -40,6 +58,10 @@ class CustomDashboardWidget extends Widget
             'totalSales' => $totalSales,
             'latestOrders' => $latestOrders,
             'todayOrdersCount' => $todayOrdersCount,
+            'salesGrowth' => $salesGrowth,
+            'newProductsCount' => $newProductsCount,
+            'usersGrowth' => $usersGrowth,
+            'ordersGrowth' => $ordersGrowth,
         ];
     }
 }

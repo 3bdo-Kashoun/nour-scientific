@@ -369,7 +369,9 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                 </div>
-                <span class="ns-stat-badge">+12.5%</span>
+                <span class="ns-stat-badge" style="{{ $salesGrowth < 0 ? 'background-color: rgba(239, 68, 68, 0.1); color: #ef4444;' : '' }}">
+                    {{ $salesGrowth >= 0 ? '+' : '' }}{{ number_format($salesGrowth, 1) }}%
+                </span>
             </div>
             <div class="ns-stat-body">
                 <span class="ns-stat-label">إجمالي المبيعات</span>
@@ -385,7 +387,9 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                     </svg>
                 </div>
-                <span class="ns-stat-badge">+8 جديد</span>
+                <span class="ns-stat-badge">
+                    +{{ $newProductsCount }} جديد
+                </span>
             </div>
             <div class="ns-stat-body">
                 <span class="ns-stat-label">عدد المنتجات</span>
@@ -401,7 +405,9 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 20H22V18C22 15.7909 20.2091 14 18 14C17.0767 14 16.2233 14.3142 15.5434 14.8415M17 20H7M17 20V18C17 16.7118 16.3981 15.5641 15.4566 14.8415M7 20H2V18C2 15.7909 3.79086 14 6 14C6.92329 14 7.77666 14.3142 8.45662 14.8415M7 20V18C7 16.7118 7.6019 15.5641 8.54338 14.8415M8.54338 14.8415C9.40193 14.1206 10.4907 13.682 11.682 13.682C12.8732 13.682 13.962 14.1206 14.8206 14.8415M12 10C13.6569 10 15 8.65685 15 7C15 5.34315 13.6569 4 12 4C10.3431 4 9 5.34315 9 7C9 8.65685 10.3431 10 12 10Z"></path>
                     </svg>
                 </div>
-                <span class="ns-stat-badge">+23.1%</span>
+                <span class="ns-stat-badge" style="{{ $usersGrowth < 0 ? 'background-color: rgba(239, 68, 68, 0.1); color: #ef4444;' : '' }}">
+                    {{ $usersGrowth >= 0 ? '+' : '' }}{{ number_format($usersGrowth, 1) }}%
+                </span>
             </div>
             <div class="ns-stat-body">
                 <span class="ns-stat-label">العملاء النشطين</span>
@@ -417,11 +423,13 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 12l3-3 3 3 4-4M8 21h12a2 2 0 002-2V7a2 2 0 00-2-2H8a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                     </svg>
                 </div>
-                <span class="ns-stat-badge">+4.2%</span>
+                <span class="ns-stat-badge" style="{{ $ordersGrowth < 0 ? 'background-color: rgba(239, 68, 68, 0.1); color: #ef4444;' : '' }}">
+                    {{ $ordersGrowth >= 0 ? '+' : '' }}{{ number_format($ordersGrowth, 1) }}%
+                </span>
             </div>
             <div class="ns-stat-body">
-                <span class="ns-stat-label">معدل النمو</span>
-                <span class="ns-stat-value">28.4%</span>
+                <span class="ns-stat-label">معدل النمو (الطلبيات)</span>
+                <span class="ns-stat-value">{{ number_format($ordersGrowth, 1) }}%</span>
             </div>
         </div>
     </div>
