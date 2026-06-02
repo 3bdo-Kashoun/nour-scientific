@@ -4,6 +4,7 @@
         @foreach($products as $item)
             <div class="reveal active"> {{-- كلاس active لضمان الظهور الفوري --}}
                 <x-product-card
+                    :id="$item->id"
                     :title="$item->name"
                     {{-- جلب اسم الشركة واسم التصنيف عبر العلاقات --}}
                     :company="$item->company?->name ?? 'غير محدد'"
@@ -11,7 +12,7 @@
                     {{-- التعديل ليتوافق مع اسم العمود في الصورة: code --}}
                     :product_code="$item->code"
                     {{-- التعديل ليتوافق مع اسم العمود في الصورة: dos_value --}}
-                    :dose="$item->dos_value"
+                    :dose="$item->dos_value . ' ' . ($item->dosage?->unit_name ?? '')"
                     :image="$item->image"
                     :price="$item->price"
                 />

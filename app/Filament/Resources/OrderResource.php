@@ -38,6 +38,7 @@ class OrderResource extends Resource
                     ->maxLength(255)
                     ->label('رقم الهاتف'),
                 Forms\Components\Toggle::make('delivery_requested')
+                    ->reactive()
                     ->required()
                     ->label('طلب توصيل (حجز إن كانت معطلة)'),
                 Forms\Components\TextInput::make('delivery_price')
@@ -45,6 +46,10 @@ class OrderResource extends Resource
                     ->numeric()
                     ->default(0.00)
                     ->label('سعر التوصيل'),
+                Forms\Components\Textarea::make('delivery_address')
+                    ->label('عنوان التوصيل')
+                    ->visible(fn (callable $get) => $get('delivery_requested') == true)
+                    ->columnSpanFull(),
                 Forms\Components\Select::make('status')
                     ->options([
                         'pending' => 'قيد الانتظار',
@@ -84,6 +89,10 @@ class OrderResource extends Resource
                     ->label('سعر التوصيل')
                     ->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' د.ل')
                     ->sortable(),
+                 Tables\Columns\TextColumn::make('delivery_address')
+                    ->label('عنوان التوصيل')
+                    ->limit(35)
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('status')
                     ->label('الحالة')
                     ->badge()
@@ -138,67 +147,7 @@ class OrderResource extends Resource
                                 'status' => $record->status,
                             ])
                             ->action(function (Order $record, array $data): void {
-                                $oldStatus = $record->status;
-                                $newStatus = $data['status'];
-
-                                if ($oldStatus === $newStatus) {
-                                    return;
-                                }
-
-                                \DB::transaction(function () use ($record, $oldStatus, $newStatus) {
-                                    $orderNo = '#ORD-' . str_pad($record->id, 3, '0', STR_PAD_LEFT);
-                                    $clientName = $record->user?->name ?? 'غير معروف';
-
-                                    // Apply stock rules based on transitions
-                                    if ($oldStatus === 'pending' && $newStatus === 'cancelled') {
-                                        // Pending -> Cancelled: increment stock, log return
-                                        foreach ($record->products as $product) {
-                                            $qty = $product->pivot->quantity;
-                                            $product->increment('stock_quantity', $qty);
-                                            $product->stockMovements()->create([
-                                                'quantity' => $qty,
-                                                'type' => 'in',
-                                                'reason' => "إرجاع بضاعة صالحة للمخزن بعد إلغاء الطلبية من الزبون {$clientName}",
-                                            ]);
-                                        }
-                                    } elseif ($oldStatus === 'pending' && $newStatus === 'in_delivery') {
-                                        // Pending -> In Delivery: decrement stock, log delivery
-                                        foreach ($record->products as $product) {
-                                            $qty = $product->pivot->quantity;
-                                            $product->decrement('stock_quantity', $qty);
-                                            $product->stockMovements()->create([
-                                                'quantity' => $qty,
-                                                'type' => 'out',
-                                                'reason' => "شحن وتوصيل للزبون {$clientName} - طلبية رقم {$orderNo}",
-                                            ]);
-                                        }
-                                    } elseif ($oldStatus === 'in_delivery' && $newStatus === 'cancelled') {
-                                        // In Delivery -> Cancelled: increment stock, log return
-                                        foreach ($record->products as $product) {
-                                            $qty = $product->pivot->quantity;
-                                            $product->increment('stock_quantity', $qty);
-                                            $product->stockMovements()->create([
-                                                'quantity' => $qty,
-                                                'type' => 'in',
-                                                'reason' => "إرجاع بضاعة صالحة للمخزن بعد إلغاء الطلبية من الزبون {$clientName}",
-                                            ]);
-                                        }
-                                    } elseif ($oldStatus === 'pending' && $newStatus === 'sold') {
-                                        // Pending -> Sold: decrement stock, log sale
-                                        foreach ($record->products as $product) {
-                                            $qty = $product->pivot->quantity;
-                                            $product->decrement('stock_quantity', $qty);
-                                            $product->stockMovements()->create([
-                                                'quantity' => $qty,
-                                                'type' => 'out',
-                                                'reason' => "بيع مباشر للزبون {$clientName} - طلبية رقم {$orderNo}",
-                                            ]);
-                                        }
-                                    }
-
-                                    // Update the order status
-                                    $record->update(['status' => $newStatus]);
-                                });
+                                $record->update(['status' => $data['status']]);
                             })
                     ),
                 Tables\Columns\TextColumn::make('total_price')
@@ -293,6 +242,11 @@ class OrderResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return parent::getEloquentQuery()->with(['user']);
     }
 
     public static function getPages(): array

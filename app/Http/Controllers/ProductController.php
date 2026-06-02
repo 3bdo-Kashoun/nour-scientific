@@ -31,8 +31,8 @@ class ProductController extends Controller
 
     $products = $query->get();
 
-    // إذا كان الطلب أجاكس (HTMX) نرجع الجزئية فقط
-    if ($request->header('HX-Request')) {
+    // إذا كان الطلب أجاكس نرجع الجزئية فقط
+    if ($request->ajax() || $request->header('X-Requested-With') === 'XMLHttpRequest' || $request->header('HX-Request')) {
         return view('partials.search-result', compact('products'))->render();
     }
 

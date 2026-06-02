@@ -1,4 +1,4 @@
-@props(['image', 'title', 'company', 'product_code', 'dose', 'category', 'price'])
+@props(['id', 'image', 'title', 'company', 'product_code', 'dose', 'category', 'price'])
 
 {{-- دمج الكلاسات الأساسية مع أي كلاسات تأتي من الخارج --}}
 <div {{ $attributes->merge(['class' => 'product-card reveal']) }}>
@@ -18,7 +18,7 @@
             <p><strong>الجرعة/الحجم:</strong> {{ $dose }}</p>
 
 
-            <button class="btn-buy">إضافة للسلة</button>
+            <button class="btn-buy" onclick="addToCart(event, {{ $id }})">إضافة للسلة</button>
             <p><strong class="price-tag">السعر:</strong> {{ $price }} د.ل</p>
         {{-- وضع الـ Slot هنا لكي يظهر أي محتوى إضافي داخل الكارت --}}
 

@@ -401,7 +401,6 @@ class YPanelProvider extends PanelProvider
     '),
 )
             ->databaseNotifications()
-            ->databaseNotificationsPolling('2s')
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

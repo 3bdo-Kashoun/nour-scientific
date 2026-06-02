@@ -24,6 +24,9 @@ class CustomDashboardWidget extends Widget
         // إجمالي المبيعات من الطلبات التي تم بيعها (sold)
         $totalSales = Order::where('status', 'sold')->sum('total_price');
 
+        // عدد الطلبيات الجديدة اليوم
+        $todayOrdersCount = Order::whereDate('created_at', today())->count();
+
         // 2. آخر الطلبات للجدول
         $latestOrders = Order::with('user')
             ->latest()
@@ -36,6 +39,7 @@ class CustomDashboardWidget extends Widget
             'newsCount' => $newsCount,
             'totalSales' => $totalSales,
             'latestOrders' => $latestOrders,
+            'todayOrdersCount' => $todayOrdersCount,
         ];
     }
 }

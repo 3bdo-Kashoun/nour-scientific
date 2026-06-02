@@ -58,8 +58,11 @@ class StockMovementResource extends Resource
                     ->label('الكمية')
                     ->sortable()
                     ->badge()
-                    ->color(fn (int $state): string => $state > 0 ? 'success' : 'danger')
-                    ->formatStateUsing(fn (int $state): string => $state > 0 ? '+' . $state : $state),
+                    ->color(fn ($state, $record): string => $record->type === 'in' ? 'success' : 'danger')
+                    ->formatStateUsing(function ($state, $record): string {
+                        $absVal = abs((int) $state);
+                        return $record->type === 'in' ? '+' . $absVal : '-' . $absVal;
+                    }),
                 Tables\Columns\TextColumn::make('type')
                     ->label('نوع الحركة')
                     ->badge()
@@ -91,7 +94,8 @@ class StockMovementResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array
@@ -99,6 +103,11 @@ class StockMovementResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return parent::getEloquentQuery()->with(['product']);
     }
 
     public static function getPages(): array

@@ -463,7 +463,7 @@
             </svg>
             <div class="ns-action-header">
                 <span class="ns-action-title">نشاط اليوم</span>
-                <span class="ns-action-subtitle">32 طلب جديد</span>
+                <span class="ns-action-subtitle">{{ $todayOrdersCount }} طلب جديد اليوم</span>
             </div>
             <a href="/admin/orders" class="ns-action-btn">
                 عرض التفاصيل
