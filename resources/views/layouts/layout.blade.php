@@ -59,7 +59,10 @@
                     @endguest
                     <div class="auth-section">
                         @guest
-                            <a href="{{ route('login') }}" class="btn btn-login">تسجيل الدخول</a>
+                            <a href="{{ route('login') }}" class="btn btn-login">
+                                <i class="fa-solid fa-right-to-bracket"></i>
+                                <span>تسجيل الدخول</span>
+                            </a>
                         @else
                             <div class="user-menu">
                                 <button class="user-name" id="userMenuToggle">

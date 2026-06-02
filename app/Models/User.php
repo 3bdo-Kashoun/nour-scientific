@@ -2,49 +2,50 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Models\Contracts\FilamentUser; // 1. استيراد الواجهة
+use Filament\Panel;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser // 2. تنفيذ الواجهة هنا
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
+        'is_admin', // تأكد من إضافة الحقل هنا إذا كنت ستستخدم الـ Mass Assignment
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_admin' => 'boolean', // من الأفضل تحويله لـ boolean لتسهيل التحقق
         ];
+    }
+
+    /**
+     * 3. إضافة الدالة المسؤولة عن السماح بدخول لوحة التحكم
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        // سيعيد true فقط إذا كان المستخدم يحمل قيمة 1 في حقل is_admin
+        return (bool) $this->is_admin;
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

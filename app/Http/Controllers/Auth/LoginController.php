@@ -19,6 +19,7 @@ class LoginController extends Controller
             $request->session()->put('name', Auth::user()->name);
 
             $request->session()->put('auth.password_confirmed_at', time());
+            
             if ($request->has('remember')) {
 
                 Cookie::queue('remember_email', $request->email, 60 * 24 * 365);

@@ -77,43 +77,52 @@ class CompanyResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\Layout\View::make('filament.pages.company-card-row')
+                    ->schema([
+                        Tables\Columns\TextColumn::make('name')
+                            ->label('اسم الشركة')
+                            ->searchable()
+                            ->sortable(),
 
+                        Tables\Columns\TextColumn::make('email')
+                            ->label('البريد الإلكتروني')
+                            ->searchable(),
 
-                Tables\Columns\TextColumn::make('name')
-                    ->label('اسم الشركة')
-                    ->searchable()
-                    ->sortable(),
+                        Tables\Columns\TextColumn::make('phone')
+                            ->label('رقم الهاتف')
+                            ->searchable(),
 
-                Tables\Columns\TextColumn::make('email')
-                    ->label('البريد الإلكتروني')
-                    ->searchable(),
-
-                Tables\Columns\TextColumn::make('phone')
-                    ->label('رقم الهاتف')
-                    ->searchable()
-                    ->extraAttributes(['style' => 'direction: ltr;'])
-                    ->alignment(\Filament\Support\Enums\Alignment::Right),
-
-                Tables\Columns\TextColumn::make('country')
-                    ->label('الدولة')
-                    ->searchable()
-                    ->sortable(),
-
-
+                        Tables\Columns\TextColumn::make('country')
+                            ->label('الدولة')
+                            ->searchable()
+                            ->sortable(),
+                    ]),
+            ])
+            ->contentGrid([
+                'md' => 2,
+                'lg' => 3,
             ])
             ->filters([
                 //
             ])
             ->actions([
-               Tables\Actions\EditAction::make()
-                    ->iconButton()
+                Tables\Actions\EditAction::make()
+                    ->button()
+                    ->label('تعديل')
                     ->icon('heroicon-m-pencil-square')
-                    ->color('info'),
+                    ->color('primary')
+                    ->extraAttributes([
+                        'class' => 'company-edit-btn flex-grow justify-center py-2.5 rounded-xl text-sm font-bold shadow-sm',
+                    ]),
 
                 Tables\Actions\DeleteAction::make()
+                    ->label('')
                     ->iconButton()
-                    ->icon('heroicon-m-trash') // أيقونة السلة الحمراء
-                    ->color('danger'),
+                    ->icon('heroicon-m-trash')
+                    ->color('danger')
+                    ->extraAttributes([
+                        'class' => 'company-delete-btn p-2.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 dark:bg-red-950/20 dark:hover:bg-red-900/30 dark:text-red-400 border border-transparent shadow-sm',
+                    ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

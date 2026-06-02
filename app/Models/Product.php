@@ -23,4 +23,16 @@ public function company()
 {
     return $this->belongsTo(Company::class);
 }
+
+public function orders()
+{
+    return $this->belongsToMany(Order::class)
+        ->withPivot('quantity', 'price')
+        ->withTimestamps();
+}
+
+public function stockMovements()
+{
+    return $this->hasMany(StockMovement::class);
+}
 }

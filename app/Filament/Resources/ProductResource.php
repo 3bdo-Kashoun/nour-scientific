@@ -94,55 +94,65 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image')
-                    ->label('الصورة'),
+                Tables\Columns\Layout\View::make('filament.pages.product-card-row')
+                    ->schema([
+                        Tables\Columns\TextColumn::make('name')
+                            ->label('اسم المنتج')
+                            ->searchable()
+                            ->sortable(),
 
-                Tables\Columns\TextColumn::make('name')
-                    ->label('اسم المنتج')
-                    ->searchable(),
+                        Tables\Columns\TextColumn::make('code')
+                            ->label('الكود')
+                            ->searchable(),
 
-                Tables\Columns\TextColumn::make('category.name') // عرض اسم القسم بدل الـ ID
-                    ->label('الصنف')
-                    ->sortable(),
+                        Tables\Columns\TextColumn::make('category.name')
+                            ->label('الصنف')
+                            ->searchable()
+                            ->sortable(),
 
-                Tables\Columns\TextColumn::make('price')
-                    ->label('السعر')
-                    ->money('LYD')
+                        Tables\Columns\TextColumn::make('company.name')
+                            ->label('الشركة')
+                            ->searchable()
+                            ->sortable(),
 
-                    ->sortable(),
+                        Tables\Columns\TextColumn::make('price')
+                            ->label('السعر')
+                            ->sortable(),
 
-                Tables\Columns\TextColumn::make('stock_quantity')
-                    ->label('المخزون')
-
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('expiry_date')
-                    ->label('تاريخ الصلاحية')
-                    ->date()
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('code')
-                    ->label('الكود')
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                        Tables\Columns\TextColumn::make('stock_quantity')
+                            ->label('المخزون')
+                            ->sortable(),
+                    ]),
+            ])
+            ->contentGrid([
+                'md' => 2,
+                'lg' => 3,
             ])
             ->filters([])
             ->actions([
-               Tables\Actions\EditAction::make()
-                    ->iconButton()
+                Tables\Actions\EditAction::make()
+                    ->label('تعديل')
                     ->icon('heroicon-m-pencil-square')
-                    ->color('info'),
+                    ->button()
+                    ->color('primary')
+                    ->extraAttributes([
+                        'class' => 'product-edit-btn flex-1 py-2.5 rounded-xl border border-transparent shadow-sm',
+                    ]),
 
                 Tables\Actions\DeleteAction::make()
+                    ->label('')
                     ->iconButton()
-                    ->icon('heroicon-m-trash') // أيقونة السلة الحمراء
-                    ->color('danger'),
+                    ->icon('heroicon-m-trash')
+                    ->color('danger')
+                    ->extraAttributes([
+                        'class' => 'product-delete-btn p-2.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 dark:bg-red-950/20 dark:hover:bg-red-900/30 dark:text-red-400 border border-transparent shadow-sm',
+                    ]),
             ])
-
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('حذف المحدد'),
+                ])->label('عمليات جماعية'),
             ]);
     }
 
